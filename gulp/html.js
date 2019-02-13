@@ -24,16 +24,16 @@ gulp.task('html', () => {
 });
 
 gulp.task('html:watch', ['html'], () => {
-  gulp.watch([config.src.html, config.build.root + '/assets/**/*'], function() {
+  gulp.watch([config.src.html, config.build.root + 'assets/**/*'], function() {
     runSequence('html', 'server:reload');
   });
 });
 
 function staticInject(filepath) {
   if (filepath.slice(-4) === '.css') {
-    return `<link rel="stylesheet" href="${ filepath }">`;
+    return `<link rel="stylesheet" href="${ filepath.slice(1) }">`;
   } else if (filepath.slice(-3) === '.js') {
-    return `<script src="${ filepath }"></script>`;
+    return `<script src="${ filepath.slice(1) }"></script>`;
   } else {
     // Use the default transform as fallback:
     return inject.transform.apply(inject.transform, arguments);
@@ -42,8 +42,8 @@ function staticInject(filepath) {
 
 function staticPreload(filepath) {
   if (filepath.slice(-4) === '.css') {
-    return `<link rel="preload" href="${ filepath }" as="style">`;
+    return `<link rel="preload" href="${ filepath.slice(1) }" as="style">`;
   } else if (filepath.slice(-3) === '.js') {
-    return `<link rel="preload" href="${ filepath }" as="script">`;
+    return `<link rel="preload" href="${ filepath.slice(1) }" as="script">`;
   }
 };

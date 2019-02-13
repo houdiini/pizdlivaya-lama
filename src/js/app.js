@@ -15,7 +15,8 @@ let setting = {
     text: "Фыр фыр фыр"
   },
   voice: {
-    languageCode: "ru-ru",
+    languageCode: "ru-RU",
+    name: "ru-RU-Wavenet-D"
   }
 }
 
@@ -23,7 +24,6 @@ const keyHandler = _.debounce(() => {
   say(input.value);
 }, 1000, false);
 
-say(input.value);
 
 input.addEventListener('keyup', keyHandler)
 
@@ -85,12 +85,14 @@ analyser.getByteTimeDomainData(dataArray);
 
 const audio = new Audio();
 const source = audioCtx.createMediaElementSource(audio);
+document.body.appendChild(audio);
 
 async function say(text) {
   try {
     setting.input.text = text;
     const { data: { audioContent } = {} } = await axios.post('https://texttospeech.googleapis.com/v1beta1/text:synthesize?key=AIzaSyDqXWG_Pw4kKldwZCBQYsvNYaw7oeV7kG0', setting);
 
+    console.log(audio);
     audio.src = 'data:audio/wav;base64,' + audioContent;
     source.connect(analyser);
     analyser.connect(audioCtx.destination);
@@ -133,3 +135,4 @@ function speakAnimation(t) {
 }
 
 speakAnimation();
+say(input.value);
