@@ -32,7 +32,7 @@ canvas.height = window.innerHeight;
 
 let image = new Image();
 
-image.src = '/assets/img/lama.png';
+image.src = 'assets/img/lama.png';
 
 image.addEventListener('load', () => {
   mouth = {x: canvas.width / 2 + (image.width / 2 * 0.12), y: canvas.height - image.height * 0.75, w: 20, h: 20};
@@ -97,7 +97,7 @@ async function say(text) {
     audio.play();
     return audioContent;
   } catch(e) {
-    console.log('error', e);
+    console.log('errorr', e);
   }
 }
 
